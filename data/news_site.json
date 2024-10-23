@@ -1,0 +1,19 @@
+{
+    "rss_sources": {
+        "VnExpress": {
+            "Tin mới nhất": "https://vnexpress.net/rss/tin-moi-nhat.rss",
+            "Thời sự": "https://vnexpress.net/rss/thoi-su.rss",
+            "Thế giới": "https://vnexpress.net/rss/the-gioi.rss"
+        },
+        "TuoiTre": {
+            "Tin mới nhất": "https://tuoitre.vn/rss/tin-moi-nhat.rss",
+            "Thời sự": "https://tuoitre.vn/rss/thoi-su.rss",
+            "Thế giới": "https://tuoitre.vn/rss/the-gioi.rss"
+        },
+        "DanTri": {
+            "Tin mới nhất": "https://dantri.com.vn/rss/tin-moi-nhat.rss",
+            "Thế giới": "https://dantri.com.vn/rss/the-gioi.rss",
+            "Giáo dục": "https://dantri.com.vn/rss/giao-duc.rss"
+        }
+    }
+}
