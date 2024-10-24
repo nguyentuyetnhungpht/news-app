@@ -19,6 +19,7 @@ def fetch_rss():
     cursor = conn.cursor()
 
     total_articles = 0
+    # published_clear_cdata = None
 
     for source, categories in rss_sources.items():
         for category, url in categories.items():
@@ -26,6 +27,12 @@ def fetch_rss():
 
             if feed.bozo == 0:
                 for entry in feed.entries:
+                    if "<![DATA[" in entry.published and "]]>" in  entry.published:
+                        soup = BeautifulSoup(entry.published, 'html.parser')
+                        published_clear_cdata = soup.text.strip()
+                    else:
+                        published_clear_cdata = entry.published
+
                     soup = BeautifulSoup(entry.description, 'html.parser')
                     description_text = soup.get_text()
 
@@ -34,7 +41,7 @@ def fetch_rss():
                     exists = cursor.fetchone()[0]
 
                     if exists == 0:
-                        published_clean = entry.published.split(' +')[0] if ' +' in entry.published else entry.published
+                        published_clean = published_clear_cdata.split(' +')[0] if ' +' in published_clear_cdata else published_clear_cdata
                         cursor.execute('''
                             INSERT OR IGNORE INTO news_articles (title, link, description, published, category, source)
                             VALUES (?, ?, ?, ?, ?, ?)
