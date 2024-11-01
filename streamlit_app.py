@@ -45,13 +45,13 @@ with m1:
     newsCategory = st.selectbox("Thể loại: ", categories)  # Sử dụng danh sách thể loại
 
         # Lọc dữ liệu dựa trên sự lựa chọn của người dùng
-    if newsSite != "Tất cả" and newsCategory != "Tất cả":  # Nếu chọn cả nguồn và thể loại
+    if newsSite != "Tất cả" and newsCategory != "Tất cả":
         df_filtered = df_articles[(df_articles['Source'] == newsSite) & (df_articles['Category'] == newsCategory)]
-    elif newsSite != "Tất cả":  # Nếu chỉ chọn nguồn
+    elif newsSite != "Tất cả":
         df_filtered = df_articles[df_articles['Source'] == newsSite]
-    elif newsCategory != "Tất cả":  # Nếu chỉ chọn thể loại
+    elif newsCategory != "Tất cả":
         df_filtered = df_articles[df_articles['Category'] == newsCategory]
-    else:  # Nếu chưa chọn gì, hiển thị tất cả
+    else:
         df_filtered = df_articles
 
 
