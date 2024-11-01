@@ -1,6 +1,6 @@
 import streamlit as st
 import json
-from process_data_db import fetch_rss
+from process_data_db import fetch_rss, delete_outdate_news
 import sqlite3
 import pandas as pd
 from datetime import datetime, timedelta
@@ -17,6 +17,7 @@ t1, t2, t3 = st.columns([1,3,1])
 m1, m2 = st.columns([1,3], gap='medium')
 
 fetch_rss()
+delete_outdate_news()
 
 conn = sqlite3.connect('data/news_db.db')
 cursor = conn.cursor()

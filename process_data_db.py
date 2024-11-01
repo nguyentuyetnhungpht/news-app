@@ -19,7 +19,6 @@ def fetch_rss():
     cursor = conn.cursor()
 
     total_articles = 0
-    # published_clear_cdata = None
 
     for source, categories in rss_sources.items():
         for category, url in categories.items():
@@ -27,12 +26,6 @@ def fetch_rss():
 
             if feed.bozo == 0:
                 for entry in feed.entries:
-                    if "<![DATA[" in entry.published and "]]>" in  entry.published:
-                        soup = BeautifulSoup(entry.published, 'html.parser')
-                        published_clear_cdata = soup.text.strip()
-                    else:
-                        published_clear_cdata = entry.published
-
                     soup = BeautifulSoup(entry.description, 'html.parser')
                     description_text = soup.get_text()
 
@@ -41,7 +34,7 @@ def fetch_rss():
                     exists = cursor.fetchone()[0]
 
                     if exists == 0:
-                        published_clean = published_clear_cdata.split(' +')[0] if ' +' in published_clear_cdata else published_clear_cdata
+                        published_clean = entry.published.split(' +')[0] if ' +' in entry.published else entry.published
                         cursor.execute('''
                             INSERT OR IGNORE INTO news_articles (title, link, description, published, category, source)
                             VALUES (?, ?, ?, ?, ?, ?)
@@ -55,3 +48,27 @@ def fetch_rss():
     conn.close()
 
     print(f"Đã lưu {total_articles} bài viết vào cơ sở dữ liệu {db_path}")
+
+def delete_outdate_news():
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute('''
+    DELETE FROM news_articles
+    WHERE datetime(
+            substr(published, 13, 4) || '-' ||  -- Lấy năm
+            CASE substr(published, 9, 3)        -- Lấy tháng và chuyển đổi sang dạng số
+                WHEN 'Jan' THEN '01' WHEN 'Feb' THEN '02' WHEN 'Mar' THEN '03'
+                WHEN 'Apr' THEN '04' WHEN 'May' THEN '05' WHEN 'Jun' THEN '06'
+                WHEN 'Jul' THEN '07' WHEN 'Aug' THEN '08' WHEN 'Sep' THEN '09'
+                WHEN 'Oct' THEN '10' WHEN 'Nov' THEN '11' WHEN 'Dec' THEN '12'
+            END || '-' || 
+            substr(published, 6, 2) || ' ' ||   -- Lấy ngày
+            substr(published, 18, 8)            -- Lấy giờ, phút, giây
+        ) < datetime('now', '-2 hours')
+    ''')
+    del_count = cursor.rowcount
+    print(f"Số bài viết đã xóa: {del_count}")
+    
+    conn.commit()  # Lưu thay đổi
+    conn.close()  # Đóng kết nối
