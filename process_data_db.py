@@ -67,8 +67,10 @@ def delete_outdate_news():
             substr(published, 18, 8)            -- Lấy giờ, phút, giây
         ) < datetime('now', '-2 hours')
     ''')
+    
     del_count = cursor.rowcount
     print(f"Số bài viết đã xóa: {del_count}")
     
     conn.commit()  # Lưu thay đổi
     conn.close()  # Đóng kết nối
+
