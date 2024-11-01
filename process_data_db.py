@@ -48,3 +48,23 @@ def fetch_rss():
     conn.close()
 
     print(f"Đã lưu {total_articles} bài viết vào cơ sở dữ liệu {db_path}")
+
+def delete_outdate_news():
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        DELETE FROM news_articles
+        WHERE datetime(
+            substr(published, 13, 4) || '-' ||  -- Lấy năm
+            substr(published, 9, 3) || '-' ||   -- Lấy tháng
+            substr(published, 6, 2) || ' ' ||   -- Lấy ngày
+            substr(published, 18, 8)            -- Lấy giờ, phút, giây
+        ) < datetime('now', '-2 hours');
+    ''')
+
+    del_count = cursor.rowcount
+    print(f"Số bài viết đã xóa: {del_count}")
+    
+    conn.commit()  # Lưu thay đổi
+    conn.close()  # Đóng kết nối
