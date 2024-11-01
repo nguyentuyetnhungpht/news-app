@@ -5,15 +5,35 @@
             "Thời sự": "https://vnexpress.net/rss/thoi-su.rss",
             "Thế giới": "https://vnexpress.net/rss/the-gioi.rss"
         },
-        "TuoiTre": {
+        "Tuổi Trẻ": {
             "Tin mới nhất": "https://tuoitre.vn/rss/tin-moi-nhat.rss",
             "Thời sự": "https://tuoitre.vn/rss/thoi-su.rss",
             "Thế giới": "https://tuoitre.vn/rss/the-gioi.rss"
         },
-        "DanTri": {
+        "Dân trí": {
             "Tin mới nhất": "https://dantri.com.vn/rss/tin-moi-nhat.rss",
             "Thế giới": "https://dantri.com.vn/rss/the-gioi.rss",
             "Giáo dục": "https://dantri.com.vn/rss/giao-duc.rss"
+        },
+        "SGGP": {
+            "Trang chủ": "https://www.sggp.org.vn/rss/home.rss",
+            "Xã hội": "https://www.sggp.org.vn/rss/xahoi-199.rss",
+            "Thế giới": "https://www.sggp.org.vn/rss/thegioi-143.rss"
+        },
+        "Pháp Luật": {
+            "Trang chủ": "https://plo.vn/rss/home.rss",
+            "Thời sự": "https://plo.vn/rss/thoi-su-1.rss",
+            "Xã hội": "https://plo.vn/rss/xa-hoi-3.rss"
+        },
+        "Tiền Phong": {
+            "Trang chủ": "https://tienphong.vn/rss/home.rss",
+            "Xã hội": "https://tienphong.vn/rss/xa-hoi-2.rss",
+            "Thời sự": "https://tienphong.vn/rss/thoi-su-421.rss"
+        },
+        "Lao Động": {
+            "Trang chủ": "https://laodong.vn/rss/home.rss",
+            "Xã hội": "https://laodong.vn/rss/xa-hoi.rss",
+            "Thời sự": "https://laodong.vn/rss/thoi-su.rss"
         }
     }
 }
