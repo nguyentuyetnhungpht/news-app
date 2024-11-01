@@ -19,7 +19,6 @@ m1, m2 = st.columns([1,3], gap='medium')
 fetch_rss()
 delete_outdate_news()
 
-
 conn = sqlite3.connect('data/news_db.db')
 cursor = conn.cursor()
 

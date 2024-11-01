@@ -54,17 +54,23 @@ def delete_outdate_news():
     cursor = conn.cursor()
 
     cursor.execute('''
-        DELETE FROM news_articles
-        WHERE datetime(
+    DELETE FROM news_articles
+    WHERE datetime(
             substr(published, 13, 4) || '-' ||  -- Lấy năm
-            substr(published, 9, 3) || '-' ||   -- Lấy tháng
+            CASE substr(published, 9, 3)        -- Lấy tháng và chuyển đổi sang dạng số
+                WHEN 'Jan' THEN '01' WHEN 'Feb' THEN '02' WHEN 'Mar' THEN '03'
+                WHEN 'Apr' THEN '04' WHEN 'May' THEN '05' WHEN 'Jun' THEN '06'
+                WHEN 'Jul' THEN '07' WHEN 'Aug' THEN '08' WHEN 'Sep' THEN '09'
+                WHEN 'Oct' THEN '10' WHEN 'Nov' THEN '11' WHEN 'Dec' THEN '12'
+            END || '-' || 
             substr(published, 6, 2) || ' ' ||   -- Lấy ngày
             substr(published, 18, 8)            -- Lấy giờ, phút, giây
-        ) < datetime('now', '-2 hours');
+        ) < datetime('now', '-2 hours')
     ''')
-
+    
     del_count = cursor.rowcount
     print(f"Số bài viết đã xóa: {del_count}")
     
     conn.commit()  # Lưu thay đổi
     conn.close()  # Đóng kết nối
+
